@@ -10,7 +10,6 @@
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center" />
 	
-		
 		 <LinearLayout
 	     android:id="@+id/ly"
 	    android:layout_width="wrap_content"

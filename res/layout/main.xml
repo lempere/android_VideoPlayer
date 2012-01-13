@@ -9,17 +9,24 @@
         android:layout_height="wrap_content"
         android:text="@string/hello" />
 
+
+    <EditText
+        android:id="@+id/url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_vertical"
+        
+		android:inputType="textUri" >
+        <requestFocus />
+    </EditText>
+    
     <Button
         android:id="@+id/btnPlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:text="@string/svideo" />
 
-    <Button
-        android:id="@+id/btnInit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/svideo" />
+
     
 </LinearLayout>

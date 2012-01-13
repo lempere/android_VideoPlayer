@@ -10,13 +10,10 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Player extends Activity implements
@@ -29,14 +26,11 @@ public class Player extends Activity implements
     private MediaPlayer mMediaPlayer;
     private SurfaceView mPreview;
     private SurfaceHolder holder;
-    private String path;// = getPackageResourcePath() +"raw/" + "test_cbr.mp3";
+    private String path;
     private Bundle extras;
     private static final String MEDIA = "media";
-//    private static final int LOCAL_AUDIO = 1;
-//    private static final int STREAM_AUDIO = 2;
-//    private static final int RESOURCES_AUDIO = 3;
-    private static final int LOCAL_VIDEO = 4;
-    private static final int STREAM_VIDEO = 5;
+    private static final String URL = "url";
+
     private boolean mIsVideoSizeKnown = false;
     private boolean mIsVideoReadyToBePlayed = false;
 
@@ -59,61 +53,12 @@ public class Player extends Activity implements
     private void playVideo(Integer Media) {
         doCleanUp();
         try {
-
-        	path = getPackageResourcePath() +"/raw/" + "avion.3gp";
-            switch (Media) {
-                case LOCAL_VIDEO:
-                    /*
-                     * TODO: Set the path variable to a local media file path.
-                     */
-//                    path = "";
-                	
-                    if (path == "") {
-                        // Tell the user to provide a media file URL.
-                        Toast
-                                .makeText(
-                                        Player.this,
-                                        "Please edit MediaPlayerDemo_Video Activity, "
-                                                + "and set the path variable to your media file path."
-                                                + " Your media file must be stored on sdcard.",
-                                        Toast.LENGTH_LONG).show();
-
-                    }
-                    break;
-                case STREAM_VIDEO:
-                    /*
-                     * TODO: Set path variable to progressive streamable mp4 or
-                     * 3gpp format URL. Http protocol should be used.
-                     * Mediaplayer can only play "progressive streamable
-                     * contents" which basically means: 1. the movie atom has to
-                     * precede all the media data atoms. 2. The clip has to be
-                     * reasonably interleaved.
-                     * 
-                     */
-//                    path = "";
-                    if (path == "") {
-                        // Tell the user to provide a media file URL.
-                        Toast
-                                .makeText(
-                                        Player.this,
-                                        "Please edit MediaPlayerDemo_Video Activity,"
-                                                + " and set the path variable to your media file URL.",
-                                        Toast.LENGTH_LONG).show();
-
-                    }
-
-                    break;
-
-
-            }
-//            Uri uripath = Uri.parse("android.resource://org.androidconnect/raw/avion.3gp");
+            Log.d(TAG, "Path: " + path);
             // Create a new media player and set the listeners
             mMediaPlayer = new MediaPlayer();
-//            Log.e(TAG, " -- " +getPackageResourcePath() + uripath.getEncodedPath() );
 
             try{
-//            	mMediaPlayer.setDataSource(getPackageResourcePath()+uripath.getEncodedPath());
-            	mMediaPlayer.setDataSource("http://daily3gp.com/vids/747.3gp");
+            	mMediaPlayer.setDataSource(path);
 
             }catch (IOException eio) {
                 Log.e(TAG, "error: " + eio.getMessage() + " -- " +
@@ -177,11 +122,10 @@ public class Player extends Activity implements
 
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG, "surfaceCreated called");
-        playVideo(extras.getInt(MEDIA));
+        path = extras.getString(URL);
+        playVideo(extras.getInt(MEDIA));       
         TextView text = (TextView) findViewById(R.id.txt);
-        text.setText("Texto de muestraa");
-
-
+        text.setText(path);
     }
 
     @Override
